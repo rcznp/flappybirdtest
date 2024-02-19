@@ -60,13 +60,13 @@ function generatePipe() {
 
 
     if (
-            pipeLeft < birdLeft + 10 && pipeLeft + 10 > birdLeft &&
-            (birdBottom < pipeBottom + 5|| birdBottom + 5 > pipeBottom + gap)
-        ) {
-            gameOver();
-            clearInterval(timerId);
-        }    
+        pipeLeft <= birdLeft + 40 && pipeLeft + 60 >= birdLeft &&
+        (birdBottom <= pipeBottom + 150 || birdBottom + 40 >= pipeBottom + gap)
+    ) {
+        gameOver();
+        clearInterval(timerId);
     }
+
     let timerId = setInterval(movePipe, 20);
     if (!isGameOver) setTimeout(generatePipe, 3000);
 }
