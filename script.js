@@ -30,8 +30,8 @@ document.addEventListener('keyup', control);
 
 function generatePipe() {
     let pipeLeft = 500;
-    let randomHeight = Math.random() * 60;
-    let pipeBottom = randomHeight;
+    let randomHeight = Math.floor(Math.random() * (300 - 100 + 1) + 100); // Random height between 100 and 300
+    let pipeBottom = randomHeight - 150; // Adjust bottom position based on random height
     const pipe = document.createElement('div');
     const topPipe = document.createElement('div');
     if (!isGameOver) {
@@ -42,22 +42,23 @@ function generatePipe() {
     gameContainer.appendChild(topPipe);
     pipe.style.left = pipeLeft + 'px';
     topPipe.style.left = pipeLeft + 'px';
-    pipe.style.height = 100 + randomHeight + 'px';
-    topPipe.style.height = 100 - randomHeight + 'px';
+    pipe.style.height = pipeBottom + 'px';
+    topPipe.style.height = 600 - pipeBottom - gap + 'px'; // Adjust top pipe height based on bottom pipe
 
     function movePipe() {
         pipeLeft -= 2;
         pipe.style.left = pipeLeft + 'px';
         topPipe.style.left = pipeLeft + 'px';
 
-        if (pipeLeft === -60) {
+        if (pipeLeft === -80) {
             clearInterval(timerId);
             gameContainer.removeChild(pipe);
             gameContainer.removeChild(topPipe);
         }
+
         if (
-            pipeLeft > 200 && pipeLeft < 280 && birdLeft === 220 &&
-            (birdBottom < pipeBottom + 153 || birdBottom > pipeBottom + gap - 200) ||
+            pipeLeft > 160 && pipeLeft < 240 && birdLeft === 200 &&
+            (birdBottom < pipeBottom + gap - 200 || birdBottom > pipeBottom + gap - 150) || // Adjust collision detection
             birdBottom === 0
         ) {
             gameOver();
@@ -74,4 +75,5 @@ function gameOver() {
     clearInterval(gameTimerId);
     isGameOver = true;
     document.removeEventListener('keyup', control);
+    alert('Game Over!');
 }
