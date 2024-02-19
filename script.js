@@ -58,9 +58,9 @@ function generatePipe() {
             gameContainer.removeChild(topPipe);
         }
 
-        // Adjust collision detection to check for overlap with the pipes
+
     if (
-            pipeLeft < birdLeft + 20 && pipeLeft + 20 > birdLeft &&
+            pipeLeft < birdLeft + 10 && pipeLeft + 10 > birdLeft &&
             (birdBottom < pipeBottom + 5|| birdBottom + 5 > pipeBottom + gap)
         ) {
             gameOver();
