@@ -1,11 +1,12 @@
 const gameContainer = document.getElementById('gameContainer');
 const bird = document.getElementById('bird');
 
-let birdLeft = 200;
-let birdBottom = 300;
-let gravity = 2;
+let birdLeft = 50;
+let birdBottom = 50;
+let gravity = 1.5;
 let isGameOver = false;
-let gap = 430;
+let minGap = 90;
+let maxGap = 150;
 
 function startGame() {
     birdBottom -= gravity;
@@ -22,7 +23,7 @@ function control(e) {
 }
 
 function jump() {
-    if (birdBottom < 500) birdBottom += 50;
+    if (birdBottom < 500) birdBottom += 40;
     bird.style.bottom = birdBottom + 'px';
 }
 
@@ -30,8 +31,9 @@ document.addEventListener('keyup', control);
 
 function generatePipe() {
     let pipeLeft = 500;
-    let randomHeight = Math.floor(Math.random() * (300 - 100 + 1) + 100); // Random height between 100 and 300
-    let pipeBottom = randomHeight - 150; // Adjust bottom position based on random height
+    let randomHeight = Math.floor(Math.random() * (300 - 100 + 1) + 100);
+    let pipeBottom = randomHeight - 150;
+    let gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap);
     const pipe = document.createElement('div');
     const topPipe = document.createElement('div');
     if (!isGameOver) {
@@ -43,7 +45,7 @@ function generatePipe() {
     pipe.style.left = pipeLeft + 'px';
     topPipe.style.left = pipeLeft + 'px';
     pipe.style.height = pipeBottom + 'px';
-    topPipe.style.height = 600 - pipeBottom - gap + 'px'; // Adjust top pipe height based on bottom pipe
+    topPipe.style.height = 600 - pipeBottom - gap + 'px';
 
     function movePipe() {
         pipeLeft -= 2;
@@ -56,14 +58,14 @@ function generatePipe() {
             gameContainer.removeChild(topPipe);
         }
 
-        if (
-            pipeLeft > 160 && pipeLeft < 240 && birdLeft === 200 &&
-            (birdBottom < pipeBottom + gap - 200 || birdBottom > pipeBottom + gap - 150) || // Adjust collision detection
-            birdBottom === 0
+        // Adjust collision detection to check for overlap with the pipes
+    if (
+            pipeLeft < birdLeft + 20 && pipeLeft + 20 > birdLeft &&
+            (birdBottom < pipeBottom + 5|| birdBottom + 5 > pipeBottom + gap)
         ) {
             gameOver();
             clearInterval(timerId);
-        }
+        }    
     }
     let timerId = setInterval(movePipe, 20);
     if (!isGameOver) setTimeout(generatePipe, 3000);
