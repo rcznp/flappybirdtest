@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flappy Bird</title>
+    <style>
+        .game-container {
+            width: 400px;
+            height: 600px;
+            overflow: hidden;
+            position: relative;
+            background-color: skyblue;
+        }
+        .bird {
+            width: 40px;
+            height: 40px;
+            background-color: yellow;
+            position: absolute;
+            border-radius: 50%;
+        }
+        .pipe {
+            width: 80px;
+            position: absolute;
+            bottom: 0;
+            background-color: green;
+        }
+        .pipe-top {
+            transform: rotate(180deg);
+            top: -15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container" id="gameContainer">
+        <div class="bird" id="bird"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
